@@ -1,15 +1,5 @@
 <template>
   <v-container>
-    <v-row justify="end">
-      <v-col cols="auto">
-        <v-btn block color="secondary">
-          <v-icon class="text-white mr-1">
-            mdi-plus
-          </v-icon>
-          <b class="text-white">Agendar</b>
-        </v-btn>
-      </v-col>
-    </v-row>
     <v-row>
 
       <v-col cols="12" lg="3" md="6">
@@ -34,7 +24,7 @@
             </v-row>
           </v-card-title>
           <v-card-text>
-            <data-table :data="data" :cols="cols" />
+            <data-table :data="data" :cols="cols" @delete="deleteSchedule" @edit="editSchedule" />
           </v-card-text>
         </v-card>
       </v-col>
@@ -47,7 +37,18 @@ import { onMounted, ref } from "vue";
 import ChartCard from "./ChartCard.vue";
 import DataTable, { IDataTableColProps } from "@/components/DataTable.vue";
 
+export interface ISchedule {
+  id: number;
+  destinationAccount: string;
+  description: string;
+  createdAt: Date;
+  scheduledAt: Date;
+  value: number;
+}
+
+
 const mounted = ref(false);
+
 
 
 const cols: IDataTableColProps[] = [
@@ -73,10 +74,19 @@ const cols: IDataTableColProps[] = [
     format: (value: number) => `R$ ${value.toFixed(2)}`,
     width: 150
   }
-
 ];
 
-const data = [{
+
+const deleteSchedule = (item: ISchedule) => {
+  console.log("delete", item.id);
+};
+
+const editSchedule = (item: ISchedule) => {
+  console.log("edit", item.id);
+};
+
+const data: Array<ISchedule> = [{
+  id: 1,
   "destinationAccount": "XXXXXX",
   "description": "Test test",
   "createdAt": new Date(),
