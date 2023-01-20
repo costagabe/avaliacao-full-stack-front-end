@@ -46,7 +46,7 @@ export const useTransferFormStore = defineStore("schedule-form", () => {
       }
 
       transfer.fee = TransferService.calculateFee(transfer);
-
+      
       await transferService.createTransfer(transfer);
 
       resetForm();
@@ -69,5 +69,6 @@ export const useTransferFormStore = defineStore("schedule-form", () => {
     formRef,
     setFormRef,
     loading,
+    resetForm
   };
 });

@@ -7,17 +7,11 @@ export class TransferService {
     return TransferFeeFactory.createTransferFee(transfer).calculateFee(transfer);
   }
 
-  async createTransfer(transfer: Transfer): Promise<Transfer> {
-    try {
-      transfer.id = 2;
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve(transfer);
-        }, 1000);
-      })
-    } catch (e) {
-      console.log(e);
-    }
-    return transfer;
+  async createTransfer(transfer: Transfer): Promise<Transfer | null> {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(transfer);
+      }, 1000);
+    })
   }
 }

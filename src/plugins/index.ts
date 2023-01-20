@@ -13,6 +13,6 @@ export function registerPlugins (app: App) {
     .use(vuetify)
     .use(router)
     .use(pinia)
-    .use(VueTheMask)
+    .use(VueTheMask as any)
     .use(VueMoney, { precision: 2 })
 }

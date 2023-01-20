@@ -14,7 +14,8 @@ export class TransferFeeAStrategy implements TransferFeeStrategy {
 }
 
 export class TransferFeeBStrategy implements TransferFeeStrategy {
-  calculateFee(transfer: Transfer): number {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  calculateFee(_transfer: Transfer): number {
     return 12;
   }
 }
