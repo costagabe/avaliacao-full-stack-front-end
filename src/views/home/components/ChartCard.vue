@@ -33,7 +33,7 @@ const options = {
     <v-card-title>
       <v-row justify="center">
         <v-col cols="auto">
-          <p class="text-grey">Agendamentos do dia</p>
+          <p class="text-grey">{{ title }}</p>
         </v-col>
       </v-row>
     </v-card-title>

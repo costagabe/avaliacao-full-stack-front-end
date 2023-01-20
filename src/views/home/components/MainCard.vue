@@ -36,20 +36,19 @@
 import { onMounted, ref } from "vue";
 import ChartCard from "./ChartCard.vue";
 import DataTable, { IDataTableColProps } from "@/components/DataTable.vue";
+import moment from "moment";
 
 export interface ISchedule {
   id: number;
   destinationAccount: string;
   description: string;
-  createdAt: Date;
-  scheduledAt: Date;
+  createdAt: String;
+  scheduledAt: String;
   value: number;
+  fee: number;
 }
 
-
 const mounted = ref(false);
-
-
 
 const cols: IDataTableColProps[] = [
   {
@@ -69,9 +68,15 @@ const cols: IDataTableColProps[] = [
     name: "scheduledAt",
   },
   {
-    label: "Valor",
+    label: "Valor (R$)",
     name: "value",
-    format: (value: number) => `R$ ${value.toFixed(2)}`,
+    format: (value: number) => `${value.toFixed(2)}`,
+    width: 150
+  },
+  {
+    label: "Taxa (R$)",
+    name: "fee",
+    format: (value: number) => `${value.toFixed(2)}`,
     width: 150
   }
 ];
@@ -89,9 +94,10 @@ const data: Array<ISchedule> = [{
   id: 1,
   "destinationAccount": "XXXXXX",
   "description": "Test test",
-  "createdAt": new Date(),
-  "scheduledAt": new Date(),
-  value: 100
+  "createdAt": moment().format("DD/MM/YYYY"),
+  "scheduledAt": moment().format("DD/MM/YYYY"),
+  value: 1000,
+  fee: 3
 }];
 
 onMounted(() => {
