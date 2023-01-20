@@ -12,6 +12,11 @@ const useModalStore = defineStore("modal", () => {
   const title = ref<string | null>(null);
   const text = ref<string | null>(null);
   const confirm = ref<() => void>(() => { });
+  const loading = ref(false);
+
+  function setLoading(loadingAttr: boolean) {
+    loading.value = loadingAttr;
+  }
 
   function showComponentModal(componentAttr: VNode, titleAttr: string) {
     show.value = true
@@ -43,7 +48,9 @@ const useModalStore = defineStore("modal", () => {
     close,
     confirm,
     title,
-    text
+    text,
+    setLoading,
+    loading
   }
 })
 

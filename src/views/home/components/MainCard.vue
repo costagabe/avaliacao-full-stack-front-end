@@ -1,7 +1,6 @@
 <template>
   <v-container>
     <v-row>
-
       <v-col cols="12" lg="3" md="6">
         <ChartCard title="Agendamentos do dia" :in="10" :out="5" />
       </v-col>
@@ -24,7 +23,7 @@
             </v-row>
           </v-card-title>
           <v-card-text>
-            <data-table :data="data" :cols="cols" @delete="deleteSchedule" @edit="editSchedule" />
+            <data-table :data="transferStore.transfers" :cols="cols" @delete="transferStore.deleteItem"/>
           </v-card-text>
         </v-card>
       </v-col>
@@ -36,17 +35,10 @@
 import { onMounted, ref } from "vue";
 import ChartCard from "./ChartCard.vue";
 import DataTable, { IDataTableColProps } from "@/components/DataTable.vue";
-import moment from "moment";
+import { ITransferTableProps } from "@/types/Transfer";
+import { useTransferStore } from "@/store/transfer"
 
-export interface ISchedule {
-  id: number;
-  destinationAccount: string;
-  description: string;
-  createdAt: String;
-  scheduledAt: String;
-  value: number;
-  fee: number;
-}
+
 
 const mounted = ref(false);
 
@@ -82,23 +74,15 @@ const cols: IDataTableColProps[] = [
 ];
 
 
-const deleteSchedule = (item: ISchedule) => {
+const deleteSchedule = (item: ITransferTableProps) => {
   console.log("delete", item.id);
 };
 
-const editSchedule = (item: ISchedule) => {
+const editSchedule = (item: ITransferTableProps) => {
   console.log("edit", item.id);
 };
 
-const data: Array<ISchedule> = [{
-  id: 1,
-  "destinationAccount": "XXXXXX",
-  "description": "Test test",
-  "createdAt": moment().format("DD/MM/YYYY"),
-  "scheduledAt": moment().format("DD/MM/YYYY"),
-  value: 1000,
-  fee: 3
-}];
+const transferStore = useTransferStore();
 
 onMounted(() => {
   mounted.value = true;

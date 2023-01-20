@@ -8,18 +8,26 @@
 import MainCard from "./components/MainCard.vue";
 import { useModal } from "@/composables/useModal";
 import { useTransferFormStore } from "@/store/transfer-form";
-import { nextTick } from "vue";
+import { onMounted } from "vue";
+import { useTransferStore } from "@/store/transfer";
 
-const { onConfirm, close } = useModal();
+const { onConfirm, close, setLoading } = useModal();
 const transferForm = useTransferFormStore();
+const transferStore = useTransferStore();
+
+onMounted(() => {
+  transferStore.listAll();
+})
 
 onConfirm(async () => {
+  setLoading(true);
   const isSubmitted = await transferForm.submit();
-  if(isSubmitted) {
+  if (isSubmitted) {
     close();
     transferForm.resetForm();
-    
   }
+  setLoading(false);
+
 });
 
 </script>

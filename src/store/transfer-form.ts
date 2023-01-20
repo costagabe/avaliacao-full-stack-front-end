@@ -5,8 +5,8 @@ import { defineStore } from "pinia";
 import { reactive, Ref, ref } from "vue";
 import { VForm } from 'vuetify/lib/components/VForm/index';
 import { Transfer } from "@/types/Transfer";
-
-export const useTransferFormStore = defineStore("schedule-form", () => {
+import { useToast } from 'vue-toastification'
+export const useTransferFormStore = defineStore("transfer-form", () => {
   const form = reactive<TransferForm>({
     destinationAccount: "",
     scheduleDate: moment().format("YYYY-MM-DD"),
@@ -29,6 +29,7 @@ export const useTransferFormStore = defineStore("schedule-form", () => {
   }
 
   async function submit(): Promise<boolean> {
+    const toast = useToast();
     try {
       loading.value = true;
       const { valid } = await formRef.value!.validate();
@@ -46,15 +47,14 @@ export const useTransferFormStore = defineStore("schedule-form", () => {
       }
 
       transfer.fee = TransferService.calculateFee(transfer);
-      
+
       await transferService.createTransfer(transfer);
 
       resetForm();
-
+      toast.success("Transferência realizada com sucesso!");
       return true;
     } catch (e: unknown) {
-      if (e instanceof Error)
-        console.log(e.message);
+      toast.error("Erro ao realizar transferência! Tente novamente mais tarde.")
       return false;
 
     } finally {

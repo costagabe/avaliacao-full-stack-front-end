@@ -22,6 +22,7 @@
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.0.0",
     "vue-the-mask": "^0.11.1",
+    "vue-toastification": "next",
     "vuetify": "^3.0.0",
     "webfontloader": "^1.0.0",
     "yup": "^0.32.11"

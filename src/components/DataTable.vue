@@ -9,25 +9,19 @@ export interface IDataTableColProps {
   format?: (value: any) => string;
 }
 
-export interface IDataTableEmits<T> {
-  (e: 'edit', item: T): void
-  (e: 'delete', item: T): void
+export interface IDataTableEmits {
+  (e: 'delete', item: any): void
 }
 
 export interface IDataTableProps<T> {
-  data: Array<Record<keyof T, unknown>>;
+  data: Array<Record<keyof T, any>>;
   cols: Array<IDataTableColProps>;
 }
 
-defineProps<IDataTableProps<unknown>>();
+defineProps<IDataTableProps<any>>();
 
-const emit = defineEmits<IDataTableEmits<unknown>>();
-
-  const updateItem = (item: unknown) => {
-    emit("edit", item);
-  };
-
-  const deleteItem = (item: unknown) => {
+const emit = defineEmits<IDataTableEmits>();
+  const deleteItem = (item: any) => {
     emit("delete", item);
   };
 
@@ -53,10 +47,7 @@ const emit = defineEmits<IDataTableEmits<unknown>>();
           {{col.format ? col.format((item[col.name as keyof typeof item])) : item[col.name as keyof typeof item] }}
         </td>
         <td>
-          <v-row justify="space-between">
-            <v-btn icon size="sm" class="pa-1" color="primary" @click="updateItem(item)">
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
+          <v-row justify="center">
           <v-btn icon size="sm" class="pa-1" color="error" @click="deleteItem(item)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>

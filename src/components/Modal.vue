@@ -8,13 +8,13 @@
      </v-card-title>
       <v-card-text class="pa-2">
         <component @confirm="modalStore.confirm" :key="key" v-if="modalStore.component" :is="modalStore.component" />
-        <span v-else>
+        <p class="pa-4" v-else>
           {{ modalStore.text }}
-        </span>
+        </p>
       </v-card-text>
       <v-card-actions class="justify-end px-6 pb-4">
-        <v-btn variant="tonal" color="error" @click="modalStore.close()">Close</v-btn>
-        <v-btn variant="tonal" color="success" @click="modalStore.confirm">Confirm</v-btn>
+        <v-btn :loading="modalStore.loading" variant="tonal" color="error" @click="modalStore.close()">Fechar</v-btn>
+        <v-btn :loading="modalStore.loading" variant="tonal" color="success" @click="modalStore.confirm">Confirmar</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>

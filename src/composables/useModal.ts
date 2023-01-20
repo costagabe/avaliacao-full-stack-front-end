@@ -9,6 +9,7 @@ export const useModal = () => {
 
   return {
     onConfirm,
+    setLoading: modalStore.setLoading,
     close: modalStore.close,
     showComponentModal: modalStore.showComponentModal,
     showTextModal: modalStore.showTextModal,

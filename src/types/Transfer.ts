@@ -7,3 +7,13 @@ export interface Transfer {
   transferDate: string;
   scheduleDate: string;
 }
+
+export interface ITransferTableProps {
+  id: number;
+  destinationAccount: string;
+  description: string;
+  createdAt: String;
+  scheduledAt: String;
+  value: number;
+  fee: number;
+}
