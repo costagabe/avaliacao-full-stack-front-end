@@ -1,5 +1,4 @@
 import { defineStore, } from 'pinia'
-import { nextTick } from 'vue';
 import { ref, VNode, Ref } from 'vue'
 
 export interface ModalState {

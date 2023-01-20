@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { useModal } from '@/composables/useModal';
 import { createVNode } from 'vue';
-import Schedule from "@/views/schedule/index.vue";
+import TransferForm from "@/components/TransferForm/index.vue";
 
 
 
 const { showComponentModal } = useModal();
 
 function openModal() {
-  showComponentModal(createVNode(Schedule, {}), "Agendar transferência");
+  showComponentModal(createVNode(TransferForm, {}), "Agendar transferência");
 }
 
 </script>
