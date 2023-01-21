@@ -16,18 +16,10 @@ export class TransferService {
     return null;
   }
 
-  async listAll(query?: any): Promise<ITransferProps[]> {
-    return new Promise((resolve) => {
-      setTimeout(async () => {
-        const res = await axios.get("http://localhost:8000/transfer")
-        console.log(res);
+  async listAll(): Promise<ITransferProps[]> {
+    const res = await axios.get("http://localhost:8000/transfer")
 
-        const ret = res.data.content.map(this.mapFromServer);
-        console.log(ret);
-        resolve(ret);
-      })
-
-    })
+    return res.data.content.map(this.mapFromServer);
   }
 
   private mapToServer(transfer: Transfer) {

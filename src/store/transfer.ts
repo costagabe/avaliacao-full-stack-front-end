@@ -4,6 +4,7 @@ import { ref } from "vue";
 import { ITransferProps, Transfer } from "@/types/Transfer";
 import { useModal } from "@/composables/useModal";
 import { useToast } from 'vue-toastification'
+import { useChartsStore } from "./charts";
 
 export const useTransferStore = defineStore("transfer-store", () => {
   const transfers = ref<ITransferProps[]>([]);
@@ -17,13 +18,17 @@ export const useTransferStore = defineStore("transfer-store", () => {
   }
 
  async function createTransfer(transfer: Transfer)  {
+  const {fetch} = useChartsStore();
   const res = await transferService.createTransfer(transfer);
   listAll();
+  fetch();
   return res;
  }
 
   async function confirmDelete(id: number) {
     const { setLoading, close } = useModal();
+  const {fetch} = useChartsStore();
+
     const toast = useToast();
     try {
       loading.value = true;
@@ -32,6 +37,7 @@ export const useTransferStore = defineStore("transfer-store", () => {
       close();
       toast.success("Transferência excluída com sucesso!");
       listAll();
+      fetch();
     } catch (e: unknown) {
       if(e instanceof Error) {
         console.log(e.message);

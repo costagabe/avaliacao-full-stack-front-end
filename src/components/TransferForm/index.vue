@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref, onMounted, watch } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import moment from 'moment'
 import { TransferService } from '@/services/TransferService';
 import { useTransferFormStore } from '@/store/transfer-form';
@@ -36,10 +36,6 @@ const fee = computed(() => {
 })
 
 const accountRules = Rules.transferForm.accountRules;
-
-watch(transferFormStore.form, (form) => {
-
-}, { deep: true })
 
 </script>
 
