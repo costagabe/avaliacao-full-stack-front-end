@@ -19,6 +19,11 @@ No Java, para gerar os dados dos gráficos, foi-se usado JPA Criteria Query para
   * Validações baseadas nos casos de uso das taxas aplicadas
 * As validações também são aplicadas no backend
 
+### Observações
+* O projeto está online pela vercel [aqui](https://avaliacao-full-stack-front-a4q3jst4n-costagabe.vercel.app/)
+* O backend não está online, portanto precisa estar com o servidor ligado na máquina local
+* Alguns boylerplates foram evitados para que o projeto termine mais rapido, por exemplo, o Axios não foi pré configurado, pois são poucas requisições que são feitas no sistema.
+
 
 ## Para rodar o projeto (Front)
 
