@@ -1,4 +1,4 @@
-import { ITransferTableProps, Transfer } from '@/types/Transfer';
+import { ITransferProps, Transfer } from '@/types/Transfer';
 import { TransferFeeFactory } from '@/utils/TransferFeeFactory';
 import axios from 'axios';
 import moment from 'moment';
@@ -8,36 +8,54 @@ export class TransferService {
     return TransferFeeFactory.createTransferFee(transfer).calculateFee(transfer);
   }
 
-  async createTransfer(transfer: Transfer): Promise<Transfer | null> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(transfer);
-      }, 1000);
+  async createTransfer(transfer: Transfer): Promise<ITransferProps | null> {
+    const res = await axios.post("http://localhost:8000/transfer", this.mapToServer(transfer));
+    if (res.status === 201) {
+      return this.mapFromServer(res.data);
+    }
+    return null;
+  }
+
+  async listAll(query?: any): Promise<ITransferProps[]> {
+    return new Promise((resolve) => {
+      setTimeout(async () => {
+        const res = await axios.get("http://localhost:8000/transfer")
+        console.log(res);
+
+        const ret = res.data.content.map(this.mapFromServer);
+        console.log(ret);
+        resolve(ret);
+      })
+
     })
   }
 
-  listAll(query?: any): Promise<ITransferTableProps[]> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const data: Array<ITransferTableProps> = [{
-          id: 1,
-          "destinationAccount": "XXXXXX",
-          "description": "Test test",
-          "createdAt": moment().format("DD/MM/YYYY"),
-          "scheduledAt": moment().format("DD/MM/YYYY"),
-          value: 1000,
-          fee: 3
-        }];
-        resolve(data)
-      }, 1000)
-    });
+  private mapToServer(transfer: Transfer) {
+    return {
+      scheduleDate: transfer.scheduleDate,
+      transferValue: transfer.value,
+      sourceAccount: transfer.sourceAccount,
+      destinationAccount: transfer.destinationAccount,
+    }
+  }
+
+  private mapFromServer(transfer: any): ITransferProps {
+    return {
+      id: transfer.id,
+      destinationAccount: transfer.destinationAccount,
+      sourceAccount: transfer.sourceAccount,
+      createdAt: moment(transfer.createdAt).format("DD/MM/YYYY"),
+      scheduledAt: moment(transfer.scheduleDate).format("DD/MM/YYYY"),
+      value: transfer.transferValue,
+      fee: transfer.fee,
+    }
   }
 
   async deleteItem(id: number) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(id)
-      }, 1000)
-    });
+    const res = await axios.delete(`http://localhost:8000/transfer/${id}`);
+    if (res.status === 204) {
+      return true;
+    }
+    return false;
   }
 }

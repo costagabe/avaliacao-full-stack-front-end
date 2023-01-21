@@ -1,14 +1,12 @@
 import { TransferService } from "@/services/TransferService";
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { ITransferTableProps, Transfer } from "@/types/Transfer";
+import { ITransferProps, Transfer } from "@/types/Transfer";
 import { useModal } from "@/composables/useModal";
 import { useToast } from 'vue-toastification'
 
 export const useTransferStore = defineStore("transfer-store", () => {
-  const transfers = ref<ITransferTableProps[]>([]);
-
-  const selectedTransfer = ref<Transfer | null>(null);
+  const transfers = ref<ITransferProps[]>([]);
 
   const loading = ref(false);
 
@@ -17,6 +15,12 @@ export const useTransferStore = defineStore("transfer-store", () => {
   async function listAll() {
     transfers.value = await transferService.listAll();
   }
+
+ async function createTransfer(transfer: Transfer)  {
+  const res = await transferService.createTransfer(transfer);
+  listAll();
+  return res;
+ }
 
   async function confirmDelete(id: number) {
     const { setLoading, close } = useModal();
@@ -27,7 +31,11 @@ export const useTransferStore = defineStore("transfer-store", () => {
       await transferService.deleteItem(id);
       close();
       toast.success("Transferência excluída com sucesso!");
+      listAll();
     } catch (e: unknown) {
+      if(e instanceof Error) {
+        console.log(e.message);
+      }
       toast.error("Erro ao excluir transferência! Tente novamente mais tarde.")
     } finally {
       loading.value = false;
@@ -35,11 +43,11 @@ export const useTransferStore = defineStore("transfer-store", () => {
     }
   }
 
-  async function deleteItem(id: number) {
+  async function deleteItem({id}:Transfer) {
     const { showTextModal, onConfirm } = useModal()
     showTextModal("Tem certeza que deseja excluir?", "Excluir")
     onConfirm(() => {
-      confirmDelete(id);
+      confirmDelete(id!);
     })
   }
 
@@ -47,6 +55,7 @@ export const useTransferStore = defineStore("transfer-store", () => {
     loading,
     listAll,
     transfers,
-    deleteItem
+    deleteItem,
+    createTransfer
   };
 });

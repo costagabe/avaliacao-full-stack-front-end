@@ -51,11 +51,11 @@ watch(transferFormStore.form, (form) => {
         <v-form ref="formRef" @submit.prevent="transferFormStore.submit">
           <v-row>
             <v-col cols="12" sm="6">
-              <v-text-field :loading="transferFormStore.loading" v-mask="'AAAAAA'"
+              <v-text-field :loading="transferFormStore.loading" v-mask="'XXXXXX'"
                 v-model="transferFormStore.form.sourceAccount" label="Conta de origem" :rules="accountRules" required />
             </v-col>
             <v-col cols="12" sm="6">
-              <v-text-field :loading="transferFormStore.loading" v-mask="'AAAAAA'"
+              <v-text-field :loading="transferFormStore.loading" v-mask="'XXXXXX'"
                 v-model="transferFormStore.form.destinationAccount" label="Conta de destino" :rules="accountRules"
                 required />
             </v-col>

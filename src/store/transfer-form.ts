@@ -6,6 +6,7 @@ import { reactive, Ref, ref } from "vue";
 import { VForm } from 'vuetify/lib/components/VForm/index';
 import { Transfer } from "@/types/Transfer";
 import { useToast } from 'vue-toastification'
+import { useTransferStore } from "./transfer";
 export const useTransferFormStore = defineStore("transfer-form", () => {
   const form = reactive<TransferForm>({
     destinationAccount: "",
@@ -30,13 +31,13 @@ export const useTransferFormStore = defineStore("transfer-form", () => {
 
   async function submit(): Promise<boolean> {
     const toast = useToast();
+    const trasnferStore = useTransferStore();
     try {
       loading.value = true;
       const { valid } = await formRef.value!.validate();
 
       if (!valid) return false;
 
-      const transferService = new TransferService();
 
       const transfer: Transfer = {
         value: form.transferValue,
@@ -48,7 +49,7 @@ export const useTransferFormStore = defineStore("transfer-form", () => {
 
       transfer.fee = TransferService.calculateFee(transfer);
 
-      await transferService.createTransfer(transfer);
+      await trasnferStore.createTransfer(transfer);
 
       resetForm();
       toast.success("Transferência realizada com sucesso!");

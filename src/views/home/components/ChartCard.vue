@@ -38,7 +38,7 @@ const options = {
       </v-row>
     </v-card-title>
     <v-card-text>
-      <Pie :data="data" :options="options" width="150px" height="150px" />
+      <Pie :data="data" :options="options" height="150px"  />
     </v-card-text>
   </v-card>
 </template>

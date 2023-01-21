@@ -8,10 +8,10 @@ export interface Transfer {
   scheduleDate: string;
 }
 
-export interface ITransferTableProps {
+export interface ITransferProps {
   id: number;
+  sourceAccount: string;
   destinationAccount: string;
-  description: string;
   createdAt: String;
   scheduledAt: String;
   value: number;
